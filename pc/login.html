@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta name="renderer" content="webkit" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="Keywords" content=""/>
+    <meta name="Description" content=""/>
+    <title>登录</title>
+    <meta name="wpk-bid" content="dta_1_268094014"> <script>    !(function(c,i,e,b){var h=i.createElement("script");var f=i.getElementsByTagName("script")[0];h.type="text/javascript";h.crossorigin=true;h.onload=function(){c[b]||(c[b]=new c.wpkReporter({bid:"dta_1_268094014"}));c[b].installAll()};f.parentNode.insertBefore(h,f);h.src=e})(window,document,"https://g.alicdn.com/woodpeckerx/jssdk??wpkReporter.js","__wpk");</script>
+</head>
+<script src="//g.alicdn.com/dingding/dingtalk-jsapi/2.6.41/dingtalk.open.js"></script>
+<script src="../js/jquery/jquery.min.js"></script>
+<script src="../common/js/commonApi.js"></script>
+<script>
+    dd.ready(function() {
+        // dd.ready参数为回调函数，在环境准备就绪时触发，jsapi的调用需要保证在该回调函数触发后调用，否则无效。
+        dd.runtime.permission.requestAuthCode({
+            corpId: "dingbcd3f51cf783c5ff35c2f4657eb6378f",
+            onSuccess: function(result) {
+                commonApi.serverApi.authCode = result.code;
+                commonApi.serverApi.login({
+                    success: function (res) {
+                        if (res.access_token != null) {
+                            //window.location.href="index.html";
+                            $("h3").html(JSON.stringify(res))
+                        } else {
+                            $("h3").html(JSON.stringify(res));
+                            commonApi.alertMsg("登录失败，请联系管理员");
+                        }
+                    },
+                    fail: function (res) {
+                        commonApi.alertMsg("登录失败，请联系管理员");
+                    }
+                });
+            },
+            onFail : function(err) {
+                alert(JSON.stringify(err))
+            }
+
+        });
+    });
+</script>
+<body>
+<!--<h1><a href="http://20.1.1.239:8080/dev-hrm/pc/index.html">进入系统</a></h1>-->
+<h3>DingDing Loading.....</h3>
+</body>
+</html>

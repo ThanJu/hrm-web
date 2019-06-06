@@ -1,0 +1,517 @@
+﻿<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+    <meta name="renderer" content="webkit"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="Keywords" content="人才管理"/>
+    <meta name="Description" content="人才管理"/>
+    <title></title>
+    <meta name="wpk-bid" content="dta_1_268094014">
+    <script>    !(function (c, i, e, b) {
+        var h = i.createElement("script");
+        var f = i.getElementsByTagName("script")[0];
+        h.type = "text/javascript";
+        h.crossorigin = true;
+        h.onload = function () {
+            c[b] || (c[b] = new c.wpkReporter({bid: "dta_1_268094014"}));
+            c[b].installAll()
+        };
+        f.parentNode.insertBefore(h, f);
+        h.src = e
+    })(window, document, "https://g.alicdn.com/woodpeckerx/jssdk??wpkReporter.js", "__wpk");</script>
+</head>
+<script src="../js/jquery/jquery.min.js"></script>
+<script src="../common/js/commonApi.js"></script>
+<script>
+    commonApi.serverApi.login({
+
+        success: function (res) {
+            if (res.access_token != null) {
+                $("h4").html(JSON.stringify(res))
+            } else {
+                $("h4").html(JSON.stringify(res));
+                commonApi.alertMsg("登录失败，请联系管理员");
+            }
+        },
+        fail: function (res) {
+            commonApi.alertMsg("登录失败，请联系管理员");
+        }
+    });
+</script>
+<body>
+<h4></h4>
+<script src="../common/js/expectedPositionAjax.js"></script>
+<script src="../common/js/briefInfoAjax.js"></script>
+<script src="../common/js/configPostAjax.js"></script>
+<script src="../common/js/configIndustryAjax.js"></script>
+<script src="../common/js/baseInfoAjax.js"></script>
+<script src="../common/js/experienceEducationAjax.js"></script>
+<script src="../common/js/experienceProjectAjax.js"></script>
+<script src="../common/js/experienceWorkAjax.js"></script>
+<script src="../common/js/transferRecordAjax.js"></script>
+<script src="../common/js/commentAjax.js"></script>
+<script>
+
+    var baseInfoId = 1;
+    var transferType = 101;
+    //--------------期待职位---
+    expectedPositionAjax.newCommonApi(commonApi.newCommonApi());
+
+    function getPostCount() {
+        expectedPositionAjax.getPostCount({
+            model: {expectedPosition: {}},
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function getIndustryCount() {
+        expectedPositionAjax.getIndustryCount({
+            model: {expectedPosition: {}},
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function getStatusCount() {
+        expectedPositionAjax.getStatusCount({
+            model: {expectedPosition: {}},
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    //--------------检索信息---
+    briefInfoAjax.newCommonApi(commonApi.newCommonApi());
+
+    function getBriefInfoPageList() {
+        briefInfoAjax.getBriefInfoPageList({
+            model: {
+                briefInfoDto: {
+                    inviteTimeStart: '',
+                    inviteTimeEnd: ''
+                }, start: 0, limit: 20
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function getBriefInfoById() {
+        briefInfoAjax.getBriefInfoById({
+            model: {baseInfoId: baseInfoId},
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    //--------------配置岗位---
+    configPostAjax.newCommonApi(commonApi.newCommonApi());
+
+    function fetchConfigPostPageList() {
+        configPostAjax.fetchConfigPostPageList({
+            model: {configPost: {}, start: 0, limit: 20},
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function addConfigPost() {
+        configPostAjax.addConfigPost({
+            model: {
+                configPost: {
+                    postName: 'Java工程师',
+                    orders: 1
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function modifyConfigPost() {
+        configPostAjax.modifyConfigPost({
+            model: {
+                configPost: {
+                    postId: 1,
+                    postName: 'Java工程师',
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function transferTalentsPost() {
+        configPostAjax.transferTalentsPost({
+            model: {
+                postId: 1,
+                configPost_to: {
+                    postId: 2,
+                    postName: '软件开发工程师',
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    //--------------配置行业---
+    configIndustryAjax.newCommonApi(commonApi.newCommonApi());
+
+    function fetchConfigIndustryPageList() {
+        configIndustryAjax.fetchConfigIndustryPageList({
+            model: {configIndustry: {}, start: 0, limit: 20},
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function addConfigIndustry() {
+        configIndustryAjax.addConfigIndustry({
+            model: {
+                configIndustry: {
+                    industryName: '互联网',
+                    orders: 1
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function modifyConfigIndustry() {
+        configIndustryAjax.modifyConfigIndustry({
+            model: {
+                configIndustry: {
+                    industryId: 1,
+                    industryName: '互联网',
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function transferTalentsIndustry() {
+        configIndustryAjax.transferTalentsIndustry({
+            model: {
+                industryId: 1,
+                configIndustry_to: {
+                    industryId: 2,
+                    industryName: '电子商务',
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    //--------------人才基本信息---
+    baseInfoAjax.newCommonApi(commonApi.newCommonApi());
+
+    function addBaseInfo() {
+        baseInfoAjax.addBaseInfo({
+            model: {
+                baseInfo: {
+                    heardImg: 'https://ss0.bdstatic.com/94oJfD_bAAcT8t7mm9GUKT-xh_/timg?image&quality=100&size=b4000_4000&sec=1559701462&di=be360b3fd8947e7f6da31583eb84d05a&src=http://pic170.nipic.com/file/20180616/27311375_201323548035_2.jpg',
+                    username: '付方媛',
+                    gender: 1,
+                    mail: '36451525@qq.com',
+                    phone: '13901010001',
+                    birthDate: '1996-06-04',
+                    startWorkDate: '2016-06-04',
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function modifyBaseInfo() {
+        baseInfoAjax.modifyBaseInfo({
+            model: {
+                baseInfo: {
+                    baseInfoId: baseInfoId,
+                    username: '付方媛',
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function savePersonalStrength() {
+        baseInfoAjax.savePersonalStrength({
+            model: {
+                baseInfo: {
+                    baseInfoId: baseInfoId,
+                    personalStrength: '较强的领悟与学习能力促使我快速掌握新技术，活泼开朗的性格让我很好的与同事沟通，集体荣誉感强，注重团队精神'
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    //--------------期望岗位相关---
+    expectedPositionAjax.newCommonApi(commonApi.newCommonApi());
+
+    function addExpectedPosition() {
+        expectedPositionAjax.addExpectedPosition({
+            model: {
+                expectedPosition: {
+                    baseInfoId: baseInfoId,
+                    post: 1,
+                    postName: 'Java工程师',
+                    industry: 1,
+                    industryName: '互联网',
+                    monthlyPayLow: '10',
+                    monthlyPayHeight: '13',
+                    city: '北京',
+                    status: transferType
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function modifyExpectedPosition() {
+        expectedPositionAjax.modifyExpectedPosition({
+            model: {
+                expectedPosition: {
+                    positionId: 1,
+                    city: '北京'
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    //--------------教育经历相关---
+    experienceEducationAjax.newCommonApi(commonApi.newCommonApi());
+
+    function addExperienceEducation() {
+        //学历类型，（education，educationName）
+        // JUNIOR(101,"初中及以下"),
+        // ZZ(102,"中专/中技"),
+        // GZ(103,"高中"),
+        // DZ(104,"大专"),
+        // BK(105,"本科"),
+        // SS(106,"硕士"),
+        // BS(107,"博士");
+        experienceEducationAjax.addExperienceEducation({
+            model: {
+                experienceEducation: {
+                    baseInfoId: baseInfoId,
+                    schoolName: '安徽文达信息工程学院',
+                    // projectRole:'',
+                    education: 105,
+                    majorName: '计算机科学与技术',
+                    startTime: '2016-06-04 20:50:26',
+                    endTime: '2019-06-04 20:50:26',
+                    content: "在校经历"
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function modifyExperienceEducation() {
+        experienceEducationAjax.modifyExperienceEducation({
+            model: {
+                experienceEducation: {
+                    educationId: 1,
+                    content: "在校经历"
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    //--------------项目经历相关---
+    experienceProjectAjax.newCommonApi(commonApi.newCommonApi());
+
+    function addExperienceProject() {
+        experienceProjectAjax.addExperienceProject({
+            model: {
+                experienceProject: {
+                    baseInfoId: baseInfoId,
+                    projectName: '互联网医院管理后台系统',
+                    projectRole: '项目总监',
+                    link: 'http://www.baidu.com',
+                    startTime: '2018-06-04 20:50:26',
+                    endTime: '2019-06-04 20:50:26',
+                    description: '计算机科学与技术',
+                    projectResult: "项目结果结果结果结果结果"
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function modifyExperienceProject() {
+        experienceProjectAjax.modifyExperienceProject({
+            model: {
+                experienceProject: {
+                    projectId: 1,
+                    projectResult: "项目结果结果结果结果结果"
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    //--------------工作经历相关---
+    experienceWorkAjax.newCommonApi(commonApi.newCommonApi());
+
+    function addExperienceWork() {
+        experienceWorkAjax.addExperienceWork({
+            model: {
+                experienceWork: {
+                    baseInfoId: baseInfoId,
+                    companyName: '水木品格科技有限公司',
+                    industry: '电子商务',
+                    post: '开发组',
+                    position: 'java开发工程师',
+                    positionType: "技术人员",
+                    startTime: '2017-06-04 20:50:26',
+                    //endTime，结束时间为至今时，不传endTime
+                    //endTime: '2017-06-04 20:50:26',
+                    workContent: "工作内容工作内容工作内容工作内容"
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    function modifyExperienceWork() {
+        experienceWorkAjax.modifyExperienceWork({
+            model: {
+                experienceWork: {
+                    workId: 1,
+                    workContent: "工作内容工作内容工作内容工作内容"
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    //--------------状态转移相关---
+    transferRecordAjax.newCommonApi(commonApi.newCommonApi());
+
+    function addTransferRecord() {
+        //转移状态，（transferType，transferTypeName）
+        // NOT_INVITED(100,"未邀请"),
+        //     WAIT_REPLY(101,"待回复"),
+        //     REFUSE(102,"拒绝邀请"),
+        //     RECEIVE(103,"接收邀请"),
+        //     CANDIDATE(104,"候选人员"),
+        //     SEND_OFFER(105,"发出Offer"),
+        //     REFUSE_OFFER(106,"拒绝Offer"),
+        //     ENTRY(107,"入职"),
+        //     DIMISSION(108,"离职"),
+        //     OVERDUE(109,"过期"),
+        //     INAPPROPRIATE(110,"不合适");
+        transferType = 101;
+        transferRecordAjax.addTransferRecord({
+            model: {
+                transferRecord: {
+                    baseInfoId: baseInfoId,
+                    transferType: transferType,
+                    description: '描述一下转移情况'
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+
+    //--------------评论相关---
+    commentAjax.newCommonApi(commonApi.newCommonApi());
+
+    function addComment() {
+        commentAjax.addComment({
+            model: {
+                comment: {
+                    baseInfoId: baseInfoId,
+                    score: 2,
+                    content: '人力评价人力评价人力评价人力评价人力评价人力评价人力评价人力评价人力评价人力评价'
+                }
+            },
+            success: function (res) {
+                $("h2").html(JSON.stringify(res));
+            }
+        });
+    }
+</script>
+<input type="button" value="获取岗位数量" onclick="getPostCount()"/>
+<input type="button" value="获取行业数量" onclick="getIndustryCount()"/>
+<input type="button" value="获取状态数量" onclick="getStatusCount()"/>
+<input type="button" value="获取邀请列表" onclick="getBriefInfoPageList()"/>
+<input type="button" value="获取人才列表" onclick="getBriefInfoPageList()"/>
+<input type="button" value="根据Id获取人才详细信息" onclick="getBriefInfoById()"/>
+<input type="button" value="获取岗位列表" onclick="fetchConfigPostPageList()"/>
+<input type="button" value="获取行业列表" onclick="fetchConfigIndustryPageList()"/>
+<hr/>
+<input type="button" value="添加基本信息" onclick="addBaseInfo()"/>
+<input type="button" value="保存个人优势" onclick="savePersonalStrength()"/>
+<input type="button" value="添加期望职位" onclick="addExpectedPosition()"/>
+<input type="button" value="添加教育经历" onclick="addExperienceEducation()"/>
+<input type="button" value="添加项目经历" onclick="addExperienceProject()"/>
+<input type="button" value="添加工作经历" onclick="addExperienceWork()"/>
+<hr/>
+<input type="button" value="转移人才" onclick="addTransferRecord()"/>
+<input type="button" value="添加评价" onclick="addComment()"/>
+<hr/>
+<input type="button" value="编辑基本信息" onclick="modifyBaseInfo()"/>
+<input type="button" value="编辑个人优势" onclick="savePersonalStrength()"/>
+<input type="button" value="编辑期望职位" onclick="modifyExpectedPosition()"/>
+<input type="button" value="编辑教育经历" onclick="modifyExperienceEducation()"/>
+<input type="button" value="编辑项目经历" onclick="modifyExperienceProject()"/>
+<input type="button" value="编辑工作经历" onclick="modifyExperienceWork()"/>
+<hr/>
+<input type="button" value="添加岗位" onclick="addConfigPost()"/>
+<input type="button" value="添加行业" onclick="addConfigIndustry()"/>
+<input type="button" value="编辑岗位" onclick="modifyConfigPost()"/>
+<input type="button" value="编辑行业" onclick="modifyConfigIndustry()"/>
+<input type="button" value="转移岗位" onclick="transferTalentsPost()"/>
+<input type="button" value="转移行业" onclick="transferTalentsIndustry()"/>
+<hr/>
+<h2></h2>
+</body>
+</html>
